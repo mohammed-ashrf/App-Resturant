@@ -39,24 +39,27 @@
   <div fxFlex fxFlexOffset="20px" class="form-size">
     <h3>Send us your Feedback</h3>
     <p>{{ feedbackForm.value | json}} {{ feedbackForm.status | json}}</p>
-    <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+    <form novalidate [formGroup]="feedbackForm" #fform=(ngForm) (ngSubmit)="onSubmit()">
       <p>
         <mat-form-field class="half-width">
           <input matInput formControlName="firstname" placeholder="First Name" type="text" required>
+          <mat-error *ngIf="feedbackForm.get('firstname').hasError('required') && feedbackForm.get('firstname').touched">
+            First name is required
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="half-width">
           <input matInput formControlName="lastname" placeholder="Last Name" type="text" required>
+          <mat-error *ngIf="feedbackForm.get('lastname').hasError('required') && feedbackForm.get('lastname').touched">
+            Last name is required
+          </mat-error>
         </mat-form-field>
       </p>
       <p>
         <mat-form-field class="half-width">
           <input matInput formControlName="telnum" placeholder="tel Number" type="number" required>
-        </mat-form-field>
-        <mat-form-field class="half-width">
-          <input matInput formControlName="email" placeholder="Email" type="email" required>
-        </mat-form-field>
-      </p>
-      <table class="form-size">
+          <mat-error *ngIf="feedbackForm.get('telnum').hasError('required') && feedbackForm.get('telnum').touched">
+            Tel. number is required
+          </mat-error>
         <td>
           <mat-slide-toggle formControlName="agree">May we contact you?</mat-slide-toggle>
         </td>
@@ -74,7 +77,8 @@
           </textarea>
         </mat-form-field>
       </p>
-      <button type="submit" mat-button class="background-primary text-floral-white">Submit</button>
+      <button type="submit" mat-button class="background-primary text-floral-white"
+      [disabled]="feedbackForm.invalid">Submit</button>
     </form>
   </div>
 </div>
