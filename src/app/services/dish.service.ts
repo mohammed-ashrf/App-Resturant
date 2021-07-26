@@ -11,6 +11,7 @@ export class DishService {
 
   constructor() { }
 
+  dish : Dish;
   getDishes(): Observable<Dish[]> {
     return of(DISHES).pipe(delay(2000));
   }
